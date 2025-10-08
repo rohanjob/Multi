@@ -1,0 +1,19 @@
+pool:
+  name: 'Shiva'
+
+stages:
+- stage: Deploy
+  jobs:
+  - job: DeployDataabase
+    displayName: 'Deploy Dataabase to Kubernetes Namespace three-tier'
+    steps:
+    - task: Kubernetes@1
+      inputs:
+        connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceEndpoint: 'aks-spp'
+        azureResourceGroup: 'dev-envss'
+        kubernetesCluster: 'dev-clus'
+        namespace: 'three-tier'
+        command: 'apply'
+        arguments: '-f DB/database.yml'
+      displayName: 'Deploy Dataabase to Kubernetes'
